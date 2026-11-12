@@ -28,41 +28,41 @@ Outgoing dielectric resonances are distinguished from poles introduced by the Ha
 
 ## Core physics
 
-For a homogeneous lossless dielectric slab with refractive index \(n>1\), thickness \(d\), ambient refractive index 1, and normal-incidence plane-wave illumination, define \(x=k_0d\) with the time convention \(e^{-i\omega t}\). The two-port scattering matrix (referenced to the slab interfaces) is
+For a homogeneous lossless dielectric slab with refractive index $n>1$, thickness $d$, ambient refractive index 1, and normal-incidence plane-wave illumination, define $x=k_0d$ with the time convention $e^{-i\omega t}$. The two-port scattering matrix (referenced to the slab interfaces) is
 
-\[
+$$
 S(x)=\begin{pmatrix}r(x)&t(x)\\t(x)&r(x)\end{pmatrix},
 \quad D(x)=\cos(nx)-i\frac{n^2+1}{2n}\sin(nx),
-\]
+$$
 
-\[
+$$
 t(x)=\frac{1}{D(x)},\qquad
 r(x)=\frac{i(n^2-1)\sin(nx)}{2nD(x)}.
-\]
+$$
 
-For the outgoing (quasinormal-mode) condition, \(D(x_m)=0\), the complex poles are
+For the outgoing (quasinormal-mode) condition, $D(x_m)=0$, the complex poles are
 
-\[
+$$
 x_m = \frac{m\pi - i\log[(n+1)/(n-1)]}{n},\quad m\in\mathbb{Z}.
-\]
+$$
 
 These are poles in the **lower** half of the complex frequency plane (for the stated time convention). Their residues are analytically known:
 
-\[
+$$
 \mathrm{Res}[t]_{x_m}=\frac{i(-1)^m}{nB},\qquad
 \mathrm{Res}[r]_{x_m}=\frac{i}{nB},\qquad B=\frac{n^2-1}{2n}.
-\]
+$$
 
 We use a **zero-frequency anchored, symmetric truncation** of the pole sum to reconstruct each complex scattering amplitude:
 
-\[
+$$
 f_N(x) = f(0) + \sum_{m=-N}^{N} \mathrm{Res}[f]_{x_m}
 \left[\frac{1}{x-x_m} - \frac{1}{-x_m}\right],
-\]
+$$
 
-with \(t(0)=1\) and \(r(0)=0\). We benchmark the truncation error versus \(2N+1\), compare amplitude rather than just intensity, and test optical energy conservation of the exact solution. The finite sum need not conserve energy exactly.
+with $t(0)=1$ and $r(0)=0$. We benchmark the truncation error versus $2N+1$, compare amplitude rather than just intensity, and test optical energy conservation of the exact solution. The finite sum need not conserve energy exactly.
 
-A separate exercise perturbs the material index \(n\rightarrow n+\Delta n\) and compares exact complex-pole shifts with a first-order derivative formula; both the resonance frequency and radiative linewidth respond.
+A separate exercise perturbs the material index $n\rightarrow n+\Delta n$ and compares exact complex-pole shifts with a first-order derivative formula; both the resonance frequency and radiative linewidth respond.
 
 ## Reproduce
 
@@ -102,12 +102,12 @@ The 2D extension solves TM_z scattering for an infinite circular, isotropic, non
 
 The outgoing resonances are roots of
 
-\[
+$$
 D_m(x)=J_m(nx)H_m^{(1)\prime}(x)-nJ_m^{\prime}(nx)H_m^{(1)}(x)=0,
 \quad x=k_0R.
-\]
+$$
 
-Partial-wave S-matrix unitarity, \( |1+2a_m|=1 \), provides a strong numerical check of the exact lossless-cylinder implementation. `run_cylinder.py` illustrates scattering spectra and uses local complex root searches for representative poles.
+Partial-wave S-matrix unitarity, $|1+2a_m|=1$, provides a strong numerical check of the exact lossless-cylinder implementation. `run_cylinder.py` illustrates scattering spectra and uses local complex root searches for representative poles.
 
 **Implemented in v2:** a *local 2D cylinder pole–residue reconstruction* is benchmarked against exact Mie scattering, using an analytically justified Cauchy-background polynomial. **Stage 3 (implemented):** an independent cylindrical adaptation of scattering-channel rescaling, with physical versus channel-induced pole classification and a local residue-expansion completeness test.
 
@@ -117,37 +117,37 @@ Partial-wave S-matrix unitarity, \( |1+2a_m|=1 \), provides a strong numerical c
 
 For each azimuthal angular order `m`, the exact cylinder coefficient is
 
-\[
+$$
  a_m(z)=\frac{N_m(z)}{D_m(z)},\qquad
  D_m(z)=J_m(nz)H_m^{(1)\prime}(z)-nJ_m^{\prime}(nz)H_m^{(1)}(z),
-\]
+$$
 
-with dimensionless complex vacuum wavenumber \(z=k_0R\), cylinder index \(n=3\),
-and outgoing Hankel waves \(H_m^{(1)}\). The numerator is in `cylinder_mie.py`.
+with dimensionless complex vacuum wavenumber $z=k_0R$, cylinder index $n=3$,
+and outgoing Hankel waves $H_m^{(1)}$. The numerator is in `cylinder_mie.py`.
 The poles are the zeros of `D_m` in the lower half-plane (time convention
-\(e^{-i\omega t}\)). For simple poles \(p_j\),
+$e^{-i\omega t}$). For simple poles $p_j$,
 
-\[
+$$
  r_j=\operatorname{Res}_{z=p_j} a_m(z)=\frac{N_m(p_j)}{D_m'(p_j)}.
-\]
+$$
 
 **Why a background is necessary:** The exact 2D Mie coefficient involves cylindrical
 Hankel functions with a branch point at the origin. A naive, finite sum of poles
 is not a globally valid reconstruction. We work instead on a **local disk**
-\(|z-c|<\rho\), with `c=2.6`, `rho=1.65`, entirely in the right half-plane and
+$|z-c|<\rho$, with `c=2.6`, `rho=1.65`, entirely in the right half-plane and
 away from the Hankel branch cut. On that domain, the following Cauchy identity is exact:
 
-\[
+$$
  a_m(z)=\sum_{p_j\in C}\frac{r_j}{z-p_j} + B_m(z),\qquad
  B_m(z)=\frac{1}{2\pi i}\oint_C\frac{a_m(\zeta)}{\zeta-z}\,d\zeta.
-\]
+$$
 
 The analytic background is expanded around `c`:
 
-\[
+$$
  B_m(z)=\sum_{k\ge 0} b_k(z-c)^k,\qquad
  b_k=\frac{1}{2\pi i}\oint_C\frac{a_m(\zeta)}{(\zeta-c)^{k+1}}\,d\zeta.
-\]
+$$
 
 A periodic trapezoidal quadrature with 4096 points evaluates these coefficients
 from the **exact Mie response at complex contour points**. Pole counts are
@@ -187,11 +187,11 @@ system** used in Stage 2. For `E_z` polarization with
 `x=k_0 R`, the standard scattering matrix is `S_m(x)=1+2*a_m(x)`.
 Three analytic channel conventions are compared:
 
-\[
+$$
 S_m^{\mathrm{standard}}(x)=S_m(x),\qquad
 S_m^{\mathrm{exponential}}(x)=e^{2ix}S_m(x),\qquad
 S_m^{\mathrm{Hankel}}(x)=\frac{H_m^{(1)}(x)}{H_m^{(2)}(x)}S_m(x).
-\]
+$$
 
 For a rescaled incoming basis function `gamma_in H_m^(2)` and outgoing
 basis `gamma_out H_m^(1)`, `S_new=(gamma_in/gamma_out)S_original`.
