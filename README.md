@@ -128,7 +128,7 @@ The poles are the zeros of `D_m` in the lower half-plane (time convention
 $e^{-i\omega t}$). For simple poles $p_j$,
 
 $$
- r_j=\operatorname{Res}_{z=p_j} a_m(z)=\frac{N_m(p_j)}{D_m'(p_j)}.
+ r_j=\operatorname{\mathrm{Res}}_{z=p_j} a_m(z)=\frac{N_m(p_j)}{D_m'(p_j)}.
 $$
 
 **Why a background is necessary:** The exact 2D Mie coefficient involves cylindrical
